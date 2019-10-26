@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_eat/Constants/c.dart';
+import 'package:just_eat/MyAppDrawer/index.dart';
 
 class Home extends StatefulWidget {
   Home({Key key, this.title}) : super(key: key);
@@ -15,8 +16,8 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     return Scaffold(
-          body: CustomScrollView(
-            
+      drawer: MyAppDrawer(),
+      body: CustomScrollView(
         slivers: <Widget>[
           new SliverAppBar(
             pinned: true,
