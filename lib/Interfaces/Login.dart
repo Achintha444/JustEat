@@ -78,7 +78,7 @@ class LoginState extends State<Login> {
                               _validation = _validationController.text;
                               _auth.setSmsCode = _validation;
                               try {
-                                _auth.signInWithPhoneNumber();
+                                await _auth.signInWithPhoneNumber();
                                 
                                 Navigator.pop(tempContext);
                                 Navigator.of(tempContext).pushReplacement(
