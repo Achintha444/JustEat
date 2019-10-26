@@ -84,6 +84,7 @@ class PhoneAuth {
     print(user);
     if (user != null) {
       Database _database = await Database.createInstance();
+      _database.setRestuants();
       print('Successfully signed in, uid: ' + user.uid);
       User.createInstance(uid: user.uid);
       if (Customer.getInstance == null) {

@@ -2,12 +2,14 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:just_eat/Objects/Customer.dart';
+import 'package:just_eat/Objects/Resturant.dart';
 
 class Database {
   static Database _database;
   static Firestore _firestoreInstance;
   static int _totUsers;
   static int _currentDocId;
+  static List<Resturant> _allResturants;
   //String _uid;
   //int _type;
   //static final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -84,7 +86,7 @@ class Database {
         .collection("customer")
         .document(_currentDocId.toString());
     await documentReference.get().then((datasnapshot) {
-      print ("12345"+_currentDocId.toString());
+      print("12345" + _currentDocId.toString());
       if (datasnapshot.exists) {
         _temp.add(datasnapshot.data['email'].toString());
         _temp.add(datasnapshot.data['userName'].toString());
@@ -101,22 +103,47 @@ class Database {
         .then((QuerySnapshot snapshot) {
       snapshot.documents.forEach((f) {
         _customerCount += 1;
-        print (_customerCount.toString()+"121234");
-        print (phoneNumber+"12131144");
+        print(_customerCount.toString() + "121234");
+        print(phoneNumber + "12131144");
         if ((phoneNumber == f.data["phoneNumber"]) && (f.data["type"] == 1)) {
           _currentDocId = _customerCount;
-          print ("asaassaaaqqqqqqq"+_currentDocId.toString());
+          print("asaassaaaqqqqqqq" + _currentDocId.toString());
           return;
         }
       });
     });
   }
-  // void insertUid(String uid) {
 
-  //   _firestoreInstance
-  //       .collection("user")
-  //       .document(_totUsers.toString())
-  //       .setData({"uid": uid});
+  Future<List<Resturant>> setRestuants() async {
+    if (_allResturants == null) {
+      List<Resturant> _resturants = new List();
 
-  // }
+      await _firestoreInstance
+          .collection("resturant")
+          .getDocuments()
+          .then((QuerySnapshot snapshot) {
+        snapshot.documents.forEach((f) {
+          //String _temp = f.data["image"];
+          Resturant _tempResturant = new Resturant(f.data["image"],
+              f.data["name"], f.data["address"], f.data["desc"]);
+          _resturants.add(_tempResturant);
+        });
+      });
+
+      _allResturants = _resturants;
+    }
+
+    // void insertUid(String uid) {
+
+    //   _firestoreInstance
+    //       .collection("user")
+    //       .document(_totUsers.toString())
+    //       .setData({"uid": uid});
+
+    // }
+  }
+
+  static List<Resturant> getResturants() {
+    return _allResturants;
+  }
 }
