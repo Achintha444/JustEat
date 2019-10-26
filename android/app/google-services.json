@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "849771931279",
+    "firebase_url": "https://justeat-b4813.firebaseio.com",
+    "project_id": "justeat-b4813",
+    "storage_bucket": "justeat-b4813.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:849771931279:android:3bc71f3b21f2bbd53e32fa",
+        "android_client_info": {
+          "package_name": "com.example.just_eat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "849771931279-3rho4ggkelaij2njcubn7fde7679okma.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.just_eat",
+            "certificate_hash": "df2e9f73eaa653be043a1fcbb21d41fec99b18d3"
+          }
+        },
+        {
+          "client_id": "849771931279-65d87hv0gmf4f7j2s4b530istlikqv00.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCA-2ihtz3GcqcLfjldWFiOo5_RzffWUW8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "849771931279-65d87hv0gmf4f7j2s4b530istlikqv00.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
