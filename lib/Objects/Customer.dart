@@ -9,8 +9,8 @@ class Customer{
   //static final GoogleSignIn _googleSignIn = new GoogleSignIn();
 
   Customer._({String phoneNumber, String email, String userName = "temp"}) {
-    phoneNumber = phoneNumber.substring(3,12);
-    phoneNumber = "0"+phoneNumber;
+    // phoneNumber = phoneNumber.substring(3,11);
+    // phoneNumber = "0"+phoneNumber;
     this._phoneNumber = phoneNumber;
     this._email = email;
     this._userName = userName;

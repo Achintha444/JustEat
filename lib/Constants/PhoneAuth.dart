@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:just_eat/Objects/Customer.dart';
 import 'package:just_eat/Objects/Databse.dart';
 import 'package:just_eat/Objects/User.dart';
 
@@ -10,13 +11,18 @@ class PhoneAuth {
 
   PhoneAuth(this._phoneNumber);
 
-  Future<bool> checkIfUserRegistered() async{
+  Future<bool> checkIfUserRegistered() async {
     Database _database = await Database.createInstance();
-    List<String> _phoneNumbers = _database.getAllUsersPhoneNumbers();
+    List<String> _phoneNumbers = await _database.getAllUsersPhoneNumbers();
+    // String _tempPhone = _phoneNumber;
+    // _tempPhone  = _tempPhone .substring(1, 10);
+    // _tempPhone  = "+94" + _tempPhone ;
+    //_phoneNumber = 
+    print(_phoneNumbers.toString());
+    print(_phoneNumber);
     bool _check = _phoneNumbers.contains(_phoneNumber);
     return _check;
   }
-
 
   Future<bool> verifyPhoneNumber() async {
     bool _completed = true;
@@ -33,7 +39,7 @@ class PhoneAuth {
         (AuthException authException) {
       print(
           'Phone number verification failed. Code: ${authException.code}. Message: ${authException.message}');
-          _completed = false;
+      _completed = false;
       // setState(() {
       //   _message =
       //       ;
@@ -75,19 +81,26 @@ class PhoneAuth {
         (await _auth.signInWithCredential(credential)).user;
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
-    print (user);
+    print(user);
     if (user != null) {
+      Database _database = await Database.createInstance();
       print('Successfully signed in, uid: ' + user.uid);
       User.createInstance(uid: user.uid);
+      if (Customer.getInstance == null) {
+        List<String> _temp =
+            await _database.getCustomerEmailPhoneNumberUserName(_phoneNumber);
+        print ("asasaasaassa"+_temp.toString());
+        Customer.createInstance(phoneNumber: _phoneNumber, email: _temp[1], userName: _temp[2]);
+      }
       //User.createInstance(uid: user.uid, phoneNumber: user.phoneNumber, email: user.email);
-      print (User.getInstance.getID);
+      print(User.getInstance.getID);
     } else {
       print('Sign in failed');
     }
     //setState(() {});
   }
 
-  set setSmsCode(String smsCode){
+  set setSmsCode(String smsCode) {
     this._smsCode = smsCode;
   }
 }

@@ -24,11 +24,11 @@ class User {
     return User._user;
   }
 
-  static Future<Customer> createCustomerInstance(
-      {User user,String uid,String phoneNumber, String email, String userName}) async {
-        Customer.createInstance(user: user,phoneNumber: phoneNumber,email: email,userName: userName);
-        return Customer.getInstance;
-  }
+  // static Future<Customer> createCustomerInstance(
+  //     {User user,String uid,String phoneNumber, String email, String userName}) async {
+  //       Customer.createInstance(user: user,phoneNumber: phoneNumber,email: email,userName: userName);
+  //       return Customer.getInstance;
+  // }
 
   static void signOut() async{
     _auth.signOut();

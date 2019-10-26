@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:giffy_dialog/giffy_dialog.dart';
 import 'package:just_eat/Constants/FormValidator.dart';
 import 'package:just_eat/Constants/c.dart';
 import 'package:just_eat/Interfaces/Login.dart';
@@ -19,9 +20,75 @@ class RegisterState extends State<Register> {
   String _userName;
   String _email;
 
-  void _registerUser() async{
-    Database _database = await Database.createInstance();
-    _database.insertUser(_email, _phoneNumber, _userName);
+  void _registerUser() async {
+    try {
+      Database _database = await Database.createInstance();
+      _database.insertUser(_email, _phoneNumber, _userName);
+      _registrationComplete();
+    } catch (e) {
+      _registrationIncomplete();
+    }
+  }
+
+  void _registrationComplete() {
+    showDialog(
+      context: context,
+      builder: (_) => NetworkGiffyDialog(
+        image: new Image(
+          image: AssetImage(C.imageLink + "ok.jpg"),
+        ),
+        title: new Text(
+          "Registration Complete",
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: C.primaryColour),
+        ),
+        description: new Text(
+          "Registration successfully completed.\nPlease Register to continue",
+          style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 10,
+              color: C.primaryColour),
+        ),
+        buttonOkColor: C.secondaryColour,
+        onlyOkButton: true,
+        onOkButtonPressed: () {
+          Navigator.of(context).pushReplacement(
+              MaterialPageRoute(builder: (BuildContext context) => Login()));
+        },
+      ),
+    );
+  }
+
+  void _registrationIncomplete() {
+    showDialog(
+      context: context,
+      builder: (_) => NetworkGiffyDialog(
+        image: new Image(
+          image: AssetImage(C.imageLink + "false.jpg"),
+        ),
+        title: new Text(
+          "Registration Incomplete",
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+              color: C.primaryColour),
+        ),
+        description: new Text(
+          "Registration incomplete\nPlease Try again!",
+          style: TextStyle(
+              fontWeight: FontWeight.w500,
+              fontSize: 10,
+              color: C.primaryColour),
+        ),
+        buttonOkColor: C.secondaryColour,
+        onlyOkButton: true,
+        onOkButtonPressed: () {
+          Navigator.pop(context);
+        },
+      ),
+    );
   }
 
   @override
@@ -119,7 +186,7 @@ class RegisterState extends State<Register> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               _formKey.currentState.save();
-
+                              _registerUser();
                               print(_userName);
                             } else {
                               _autoActivate = true;

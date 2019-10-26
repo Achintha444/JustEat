@@ -25,10 +25,10 @@ class Database {
     return Database._database;
   }
 
-  List<String> getAllUsersPhoneNumbers() {
+  Future<List<String>> getAllUsersPhoneNumbers() async {
     List<String> _allPhoneNumbers = new List();
     //_allPhoneNumbers.
-    _firestoreInstance
+    await _firestoreInstance
         .collection("user")
         .getDocuments()
         .then((QuerySnapshot snapshot) {
@@ -39,10 +39,29 @@ class Database {
     return _allPhoneNumbers;
   }
 
-  void insertUser(String email, String phoneNumber, String userName) {
+  Future<int> getTotUsers() async {
+    if (_totUsers == null) {
+      List<String> _allPhoneNumbers = new List();
+      //_allPhoneNumbers.
+      await _firestoreInstance
+          .collection("user")
+          .getDocuments()
+          .then((QuerySnapshot snapshot) {
+        snapshot.documents
+            .forEach((f) => _allPhoneNumbers.add(f.data["phoneNumber"]));
+      });
+      _totUsers = _allPhoneNumbers.length;
+    }
+    return _totUsers;
+  }
+
+  void insertUser(String email, String phoneNumber, String userName) async {
+    phoneNumber = phoneNumber.substring(1, 10);
+    phoneNumber = "+94" + phoneNumber;
+    int _temp = await getTotUsers();
     _totUsers += 1;
     _currentDocId = _totUsers;
-    _firestoreInstance
+    await _firestoreInstance
         .collection("user")
         .document(_totUsers.toString())
         .setData({"type": 1, "phoneNumber": phoneNumber});
@@ -54,13 +73,42 @@ class Database {
         email: email, phoneNumber: phoneNumber, userName: userName);
   }
 
-  List<String> getCustomerEmailPhoneNumber() {
+  Future<List<String>> getCustomerEmailPhoneNumberUserName(
+      String phoneNumber) async {
+    List<String> _temp = new List();
+    _temp.add(phoneNumber);
+    // phoneNumber = phoneNumber.substring(1, 10);
+    // phoneNumber = "+94" + phoneNumber;
+    await _setDocId(phoneNumber);
+    DocumentReference documentReference = Firestore.instance
+        .collection("customer")
+        .document(_currentDocId.toString());
+    await documentReference.get().then((datasnapshot) {
+      print ("12345"+_currentDocId.toString());
+      if (datasnapshot.exists) {
+        _temp.add(datasnapshot.data['email'].toString());
+        _temp.add(datasnapshot.data['userName'].toString());
+      }
+    });
+    return _temp;
+  }
+
+  void _setDocId(String phoneNumber) async {
     int _customerCount = 0;
-    _firestoreInstance
-        .collection("books")
+    await _firestoreInstance
+        .collection("user")
         .getDocuments()
         .then((QuerySnapshot snapshot) {
-      snapshot.documents.forEach((f) => print('${f.data}}'));
+      snapshot.documents.forEach((f) {
+        _customerCount += 1;
+        print (_customerCount.toString()+"121234");
+        print (phoneNumber+"12131144");
+        if ((phoneNumber == f.data["phoneNumber"]) && (f.data["type"] == 1)) {
+          _currentDocId = _customerCount;
+          print ("asaassaaaqqqqqqq"+_currentDocId.toString());
+          return;
+        }
+      });
     });
   }
   // void insertUid(String uid) {

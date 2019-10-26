@@ -5,6 +5,7 @@ import 'package:just_eat/Constants/PhoneAuth.dart';
 import 'package:just_eat/Constants/c.dart';
 import 'package:just_eat/Constants/FormValidator.dart';
 import 'package:giffy_dialog/giffy_dialog.dart';
+import 'package:just_eat/Interfaces/Home.dart';
 import 'package:just_eat/Interfaces/Register.dart';
 
 class Login extends StatefulWidget {
@@ -63,7 +64,7 @@ class LoginState extends State<Login> {
                           TextField(
                             controller: _validationController,
                             decoration: new InputDecoration(
-                              labelText: "Enter the Verificatio code",
+                              labelText: "Enter the Verification code",
                             ),
                           ),
                           RaisedButton(
@@ -76,9 +77,18 @@ class LoginState extends State<Login> {
                             onPressed: () async {
                               _validation = _validationController.text;
                               _auth.setSmsCode = _validation;
-                              _auth.signInWithPhoneNumber();
-                              Navigator.pop(tempContext);
-                              print(_validation);
+                              try {
+                                _auth.signInWithPhoneNumber();
+                                
+                                Navigator.pop(tempContext);
+                                Navigator.of(tempContext).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (BuildContext context) =>
+                                            Home()));
+                                print(_validation);
+                              } catch (e) {
+                                _showFailedDialog(tempContext);
+                              }
                             },
                           ),
                         ],
@@ -238,6 +248,7 @@ class LoginState extends State<Login> {
                                   if (_formKey.currentState.validate()) {
                                     _formKey.currentState.save();
                                     _auth = PhoneAuth(_phoneNumber);
+                                    print ("qwwqqw"+_phoneNumber);
                                     bool _registerCheck =
                                         await _auth.checkIfUserRegistered();
                                     if (_registerCheck) {
