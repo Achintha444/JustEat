@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_eat/Constants/c.dart';
+import 'package:just_eat/MyAppDrawer/index.dart';
 import 'package:just_eat/Objects/Databse.dart';
 import 'package:just_eat/Objects/Resturant.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
@@ -42,6 +43,8 @@ class _HomeState extends State<Home> {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     return Scaffold(
+
+      drawer: MyAppDrawer(),
       body: ScrollConfiguration(
         behavior: C.buildViewportChrome(),
         child: CustomScrollView(
