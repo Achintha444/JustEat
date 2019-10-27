@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:just_eat/Constants/c.dart';
+import 'package:just_eat/Interfaces/RestruantView.dart';
 import 'package:just_eat/MyAppDrawer/index.dart';
 import 'package:just_eat/Objects/Databse.dart';
 import 'package:just_eat/Objects/Resturant.dart';
@@ -29,8 +30,8 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     //_setAtrributes();
-    _allResturants = Database.getResturants();
     super.initState();
+    _allResturants = Database.getResturants();
   }
 
   // @override
@@ -43,7 +44,6 @@ class _HomeState extends State<Home> {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
     return Scaffold(
-
       drawer: MyAppDrawer(),
       body: ScrollConfiguration(
         behavior: C.buildViewportChrome(),
@@ -86,6 +86,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
               sliver: SliverGrid(
+                
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: _height / 2,
                   mainAxisSpacing: 10.0,
@@ -93,60 +94,65 @@ class _HomeState extends State<Home> {
                   childAspectRatio: 0.6,
                 ),
                 delegate: SliverChildBuilderDelegate(
-                
                   (BuildContext context, int index) {
                     print("asasasasas" + _allResturants.toString());
-                    return InkWell(
-                      child: Container(
-                        decoration: BoxDecoration(
+                    return Container(
+                      decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
-                          color: C.primaryColour
-                        ),
-                        alignment: Alignment.center,
-                        //color: C.primaryColour,
-                        child: new Column(
-                          children: <Widget>[
-                            Container(
-                              height: 200,
-                              width: 200,
-                              decoration: new BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: new DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: new NetworkImage(
-                                    _allResturants[index].getImage,
+                          color: C.primaryColour),
+                      alignment: Alignment.center,
+                      //color: C.primaryColour,
+                      child: new Column(
+                        children: <Widget>[
+                          Hero(
+                            tag: _allResturants[index].getName,
+                            child: InkWell(
+                              child: Container(
+                                height: 200,
+                                width: 200,
+                                decoration: new BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: new DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: new NetworkImage(
+                                      _allResturants[index].getImage,
+                                    ),
                                   ),
                                 ),
                               ),
+                              onTap: () => Navigator.of(context)
+                                  .pushReplacement(MaterialPageRoute(
+                                      builder: (BuildContext context)=>
+                                          ResturantView(_allResturants[index]))),
                             ),
-                            Text(
-                              _allResturants[index].getName,
-                              textAlign: TextAlign.center,
-                              style: new TextStyle(
-                                  fontSize: _height / 35,
-                                  color: C.secondaryColour,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Text(
-                              _allResturants[index].getAddress,
-                              textAlign: TextAlign.center,
-                              style: new TextStyle(
-                                  fontSize: _height / 43,
-                                  color: C.secondaryColour,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
+                            transitionOnUserGestures: true,
+                          ),
+                          Text(
+                            _allResturants[index].getName,
+                            textAlign: TextAlign.center,
+                            style: new TextStyle(
+                                fontSize: _height / 35,
+                                color: C.secondaryColour,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            _allResturants[index].getAddress,
+                            textAlign: TextAlign.center,
+                            style: new TextStyle(
+                                fontSize: _height / 43,
+                                color: C.secondaryColour,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
-                      onTap: () {
-                        null;
-                      },
                     );
                   },
                   childCount: _allResturants.length,
                 ),
               ),
             ),
+
+
 /*             SliverFixedExtentList(
               itemExtent: 50,
               delegate: SliverChildBuilderDelegate(

@@ -52,7 +52,7 @@ class LoginState extends State<Login> {
 
               onOkButtonPressed: () async {
                 Navigator.pop(tempContext);
-                //_auth.verifyPhoneNumber();
+                _auth.verifyPhoneNumber();
                 showDialog(
                   context: tempContext,
                   child: new SimpleDialog(
@@ -87,6 +87,7 @@ class LoginState extends State<Login> {
                                             Home()));
                                 print(_validation);
                               } catch (e) {
+                                print (e);
                                 _showFailedDialog(tempContext);
                               }
                             },

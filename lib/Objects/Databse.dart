@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:just_eat/Objects/Customer.dart';
+import 'package:just_eat/Objects/Food.dart';
 import 'package:just_eat/Objects/Resturant.dart';
 
 class Database {
@@ -114,7 +115,7 @@ class Database {
     });
   }
 
-  Future<List<Resturant>> setRestuants() async {
+  void setRestuants() async {
     if (_allResturants == null) {
       List<Resturant> _resturants = new List();
 
@@ -122,11 +123,30 @@ class Database {
           .collection("resturant")
           .getDocuments()
           .then((QuerySnapshot snapshot) {
-        snapshot.documents.forEach((f) {
+        snapshot.documents.forEach((f) async {
           //String _temp = f.data["image"];
           Resturant _tempResturant = new Resturant(f.data["image"],
               f.data["name"], f.data["address"], f.data["desc"]);
+          List _foods = List.from(f.data["food"]);
+          List<Food> _menu = new List();
+          _foods.forEach((g) async{
+            if (g != ""){
+              DocumentSnapshot snapShot = await  g.get();
+              int _tempX = snapShot.data["price"];
+              Food _tempFood =
+                new Food(snapShot.data["image"],snapShot.data["name"], _tempX);
+              _menu.add(_tempFood);
+
+            }
+
+            
+          });
+          _tempResturant.setMenu = _menu;
+          print (_tempResturant.getMenu.length.toString()+"122121qwqwdadwqeqwdqada");
+          //print(_menu[0].getName);
           _resturants.add(_tempResturant);
+          //_tempResturant = await _tempFunction9(_foods, _tempResturant);
+          //_resturants.add(_tempFunction9(_foods, _tempResturant));
         });
       });
 
@@ -143,6 +163,39 @@ class Database {
     // }
   }
 
+/*   Future<Resturant> _tempFunction9(List foods, Resturant tempResturant) async {
+    print(foods.length.toString() + "Foods Length");
+    foods.forEach((g) async {
+      if (g != "" && g != null) {
+        print("a");
+        //DocumentReference _temp = g;
+        
+
+            .collection("food")
+            .get()
+            .then((QuerySnapshot snapShot) {
+          List<Food> _temp1 = new List();
+          snapShot.documents.forEach((m) async {
+            // await m
+            // .collection("")
+            Food _tempFood =
+                new Food(m.data["image"], m.data["name"], m.data["price"]);
+            print(_tempFood.getName + "Fooood111111111111");
+            _temp1.add(_tempFood);
+          });
+          print(_temp1[0].getName + "Foodsssss");
+          tempResturant.setMenu = _temp1;
+        });
+      } else {
+        tempResturant.setMenu = [];
+      }
+
+      //print ("trtrtr"+g.toString());
+    });
+    return tempResturant;
+  }
+
+   */
   static List<Resturant> getResturants() {
     return _allResturants;
   }
