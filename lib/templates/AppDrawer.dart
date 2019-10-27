@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:just_eat/Interfaces/Cart.dart';
 
 import '../Constants/c.dart';
 import 'package:just_eat/settings/index.dart';
 
+import '../Interfaces/Home.dart';
 
 // class ClassWrapper extends StatelessElement{
 //   Widget realClass;
@@ -15,12 +17,12 @@ class AppDrawer extends StatelessWidget {
   AppDrawer(this.header, this.drawerList);
 
   void handleTap(int key) {
-    print('Hello');
+    // print('Hello');
     // ClassWrapper wrapper = new ClassWrapper(drawerList[ke][2]);
-    Settings();
+    // Settings();
   }
 
-  List<Widget> createDrawer() {
+  List<Widget> createDrawer(BuildContext context) {
     List<Widget> listTileList = new List<Widget>();
 
     listTileList.add(
@@ -40,13 +42,40 @@ class AppDrawer extends StatelessWidget {
 
     for (int i = 0; i < drawerList.length; i++) {
       listTileList.add(
-        ListTile(
-          title: Text(drawerList[i][1]),
-          onTap: () {
-            handleTap(i);
-          },
-        ),
-      );
+          // Row(children: [
+          // Icon(drawerList[i][0]),
+          ListTile(
+              title: Text(drawerList[i][1]),
+              onTap: () {
+                switch (i) {
+                  case 0:
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => (Home())));
+                    break;
+                  case 1:
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => (Cart())));
+                    break;
+                  case 2:
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => (Cart())));
+                    break;
+                  case 3:
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => (Settings())));
+                    break;
+                  case 4:
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => (Settings())));
+                    break;
+                  default:
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => (Settings())));
+                    break;
+                }
+                // typedef drawerList.elementAt(i).elementAt(2)  page();
+        
+              }));
     }
 
     return listTileList;
@@ -60,8 +89,8 @@ class AppDrawer extends StatelessWidget {
       // space to fit everything.
       child: ListView(
         // Important: Remove any padding from the ListView.
-        padding: EdgeInsets.zero,
-        children: createDrawer(),
+        // padding: EdgeInsets.zero,
+        children: createDrawer(context),
       ),
     );
   }
