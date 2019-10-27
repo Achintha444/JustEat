@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_eat/Constants/c.dart';
 
 import 'package:just_eat/templates/ListView.dart';
 
@@ -13,7 +14,7 @@ class MyTabController extends StatelessWidget {
     List<MyListView> listViewList = new List<MyListView>();
     for (int i = 0; i < dataList.length; i++) {
       listViewList.add(MyListView(dataList.elementAt(i)));
-    }   
+    }
     return listViewList;
   }
 
@@ -23,8 +24,15 @@ class MyTabController extends StatelessWidget {
     List<Tab> _tabList = [];
     for (int i = 0; i < _tabListLength; i++) {
       _tabList.add(Tab(
-        text: _textList[i],
-        icon: Icon(_iconList[i]),
+        child: new Text(
+          _textList[i],
+          style: TextStyle(color: C.secondaryColour),
+        ),
+        //text: _textList[i],
+        icon: Icon(
+          _iconList[i],
+          color: C.secondaryColour,
+        ),
       ));
     }
 
@@ -34,10 +42,14 @@ class MyTabController extends StatelessWidget {
         length: _tabListLength,
         child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             bottom: TabBar(
               tabs: _tabList,
             ),
-            title: Text(_label),
+            title: Text(
+              _label,
+              style: TextStyle(color: C.secondaryColour),
+            ),
           ),
           body: TabBarView(
             children: createListView(),

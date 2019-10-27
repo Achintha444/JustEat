@@ -118,13 +118,13 @@ class _CartState extends State<Cart> {
                                 image: new DecorationImage(
                                   fit: BoxFit.cover,
                                   image: new AssetImage(
-                                    ordered[index].getImage() //.getImage,
+                                    ordered[index].getImage //.getImage,
                                   ),
                                 ),
                               ),
                             ),
                             Text(
-                              ordered[index].getName(),
+                              ordered[index].getName,
                               textAlign: TextAlign.center,
                               style: new TextStyle(
                                   fontSize: _height / 25,
@@ -140,7 +140,7 @@ class _CartState extends State<Cart> {
                                   fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              "Price: Rs. "+ordered[index].getPrice().toString(),
+                              "Price: Rs. "+ordered[index].getPrice.toString(),
                               textAlign: TextAlign.center,
                               style: new TextStyle(
                                   fontSize: _height / 35,

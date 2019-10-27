@@ -6,6 +6,6 @@ class MyAppDrawer extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
-    return AppDrawer("Gayal",drawerList);
+    return AppDrawer(drawerList);
   }
 }

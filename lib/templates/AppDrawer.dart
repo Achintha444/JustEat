@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:just_eat/Interfaces/Cart.dart';
+import 'package:just_eat/Objects/Customer.dart';
+import 'package:just_eat/Objects/User.dart';
 
 import '../Constants/c.dart';
 import 'package:just_eat/settings/index.dart';
@@ -13,26 +15,56 @@ import '../Interfaces/Home.dart';
 
 class AppDrawer extends StatelessWidget {
   final List<List<Object>> drawerList;
-  final String header;
-  AppDrawer(this.header, this.drawerList);
+  //final String header;
+  
+  //User _user = User.getInstance;
+  Customer _cus = Customer.getInstance;
+  AppDrawer(this.drawerList);
 
-  void handleTap(int key) {
-    // print('Hello');
-    // ClassWrapper wrapper = new ClassWrapper(drawerList[ke][2]);
-    // Settings();
-  }
+ 
 
   List<Widget> createDrawer(BuildContext context) {
     List<Widget> listTileList = new List<Widget>();
 
     listTileList.add(
       DrawerHeader(
-        child: Text(
-          header,
-          style: TextStyle(
-            color: C.primaryColour,
-            fontSize: 20,
-          ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                _cus.getUserName,
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  color: C.primaryColour,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                _cus.getEmail,
+                style: TextStyle(
+                  color: C.primaryColour,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                _cus.getPhonenumber,
+                style: TextStyle(
+                  color: C.primaryColour,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ],
         ),
         decoration: BoxDecoration(
           color: C.secondaryColour,

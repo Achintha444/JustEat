@@ -35,7 +35,7 @@ class User {
     User._user = null;
   }
 
-  static User get getInstance {
+   static User get getInstance {
     return User._user;
   }
 
