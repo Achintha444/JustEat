@@ -17,7 +17,7 @@ class PhoneAuth {
     // String _tempPhone = _phoneNumber;
     // _tempPhone  = _tempPhone .substring(1, 10);
     // _tempPhone  = "+94" + _tempPhone ;
-    //_phoneNumber = 
+    //_phoneNumber =
     print(_phoneNumbers.toString());
     print(_phoneNumber);
     bool _check = _phoneNumbers.contains(_phoneNumber);
@@ -82,16 +82,20 @@ class PhoneAuth {
     final FirebaseUser currentUser = await _auth.currentUser();
     assert(user.uid == currentUser.uid);
     print(user);
+    print("CHECK");
+    // Database _database = await Database.createInstance();
+    // await _database.setRestuants();
     if (user != null) {
-      Database _database = await Database.createInstance();
-      _database.setRestuants();
+       Database _database = await Database.createInstance();
+      await  _database.setRestuants();
       print('Successfully signed in, uid: ' + user.uid);
       User.createInstance(uid: user.uid);
       if (Customer.getInstance == null) {
         List<String> _temp =
             await _database.getCustomerEmailPhoneNumberUserName(_phoneNumber);
-        print ("asasaasaassa"+_temp.toString());
-        Customer.createInstance(phoneNumber: _phoneNumber, email: _temp[1], userName: _temp[2]);
+        print("asasaasaassa" + _temp.toString());
+        Customer.createInstance(
+            phoneNumber: _phoneNumber, email: _temp[1], userName: _temp[2]);
       }
       //User.createInstance(uid: user.uid, phoneNumber: user.phoneNumber, email: user.email);
       print(User.getInstance.getID);
