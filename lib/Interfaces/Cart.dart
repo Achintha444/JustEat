@@ -82,7 +82,7 @@ class _CartState extends State<Cart> {
                 padding: EdgeInsets.symmetric(horizontal: _height / 25),
                 alignment: Alignment.center,
                 child: new Text(
-                  'Orders',
+                  'Cart',
                   style: TextStyle(
                       color: C.primaryColour,
                       fontSize: _height / 26,
@@ -94,7 +94,7 @@ class _CartState extends State<Cart> {
                   maxCrossAxisExtent: _height / 2,
                   mainAxisSpacing: 10.0,
                   crossAxisSpacing: 10.0,
-                  childAspectRatio: 0.6,
+                  childAspectRatio: 0.55,
                 ),
                 delegate: SliverChildBuilderDelegate(
                 
