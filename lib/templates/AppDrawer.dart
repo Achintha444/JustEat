@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:just_eat/Interfaces/Cart.dart';
+import 'package:just_eat/Interfaces/Login.dart';
 import 'package:just_eat/Objects/Customer.dart';
 import 'package:just_eat/Objects/User.dart';
 
@@ -16,12 +18,10 @@ import '../Interfaces/Home.dart';
 class AppDrawer extends StatelessWidget {
   final List<List<Object>> drawerList;
   //final String header;
-  
+
   //User _user = User.getInstance;
   Customer _cus = Customer.getInstance;
   AppDrawer(this.drawerList);
-
- 
 
   List<Widget> createDrawer(BuildContext context) {
     List<Widget> listTileList = new List<Widget>();
@@ -97,8 +97,9 @@ class AppDrawer extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => (Settings())));
                     break;
                   case 4:
+                    User.signOut();
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => (Settings())));
+                        MaterialPageRoute(builder: (context) => (Login())));
                     break;
                   default:
                     Navigator.push(context,
@@ -106,7 +107,6 @@ class AppDrawer extends StatelessWidget {
                     break;
                 }
                 // typedef drawerList.elementAt(i).elementAt(2)  page();
-        
               }));
     }
 

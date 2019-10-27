@@ -46,4 +46,8 @@ class User {
     return User._user._type;
   }
 
+  // void signOut() async{
+  //   _auth.sign
+  // }
+
 }
